@@ -209,8 +209,17 @@ class _InputWidgetState extends State<InternationalPhoneNumberInput> {
             countries,
             widget.initialValue?.isoCode ?? '',
           ).copyWith(withCountryCode: widget.withCountryCode);
-      //
-      onCountryChanged(country);
+
+      final initCountryIndex = Countries.countryList.indexWhere((element) {
+        return element['alpha_2_code'] == widget.initialValue?.isoCode;
+      });
+      print(initCountryIndex);
+      if (initCountryIndex != -1) {
+        final con = Country.fromJson(Countries.countryList[initCountryIndex]);
+        onCountryChanged(con);
+      } else {
+        onCountryChanged(country);
+      }
       // Remove potential duplicates
       countries = countries.toSet().toList();
 
